@@ -8,12 +8,12 @@
     "exec"
   ],
   "dependencies": {
-    "https://github.com/marak/colors.js/": ">=0.6.2 <1.00",
-    "https://github.com/visionmedia/commander.js/": "2.x",
-    "https://github.com/tmpvar/jsdom": ">=0.8.6 <1.00",
-    "https://github.com/kriskowal/q": ">=0.9.7 <1.00",
-    "https://github.com/zaach/jsonlint": "1.x",
-    "https://github.com/jashkenas/underscore": "1.x"
+    "colors"   : ">=0.6.2 <1.00",
+    "commander": "2.x",
+    "jsdom"       : ">=0.8.6 <1.00",
+    "q"           : ">=0.9.7 <1.00",
+    "jsonlint"    : "1.x",
+    "underscore"  : "1.x"
   },
  "os" : ["linux", "darwin"],
  "scripts": {
