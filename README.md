@@ -10,3 +10,6 @@
     -o, --OUTPUT [file]                    Specifies output file location
     -w, --FAIL-EXTERNAL-URLS               Returns an error if external URLS are present
     -x, --CONFIG [file]                    Run with specified config file
+
+## Caveats
+if you are using imports in your css it will break the css minifier :grimacing:
