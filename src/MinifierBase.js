@@ -185,7 +185,7 @@ MinifierBase.prototype.minify = function(_file, _future){
 
         //if the file doesn't exists in the assetFiles array resolve the future
         if("string" !== typeof this.assetFiles[_file]){
-             this.fileWriteStream.end();
+             if(this.fileWriteStream) this.fileWriteStream.end();
              _future.resolve();
             return false;
         }
