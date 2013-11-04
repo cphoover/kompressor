@@ -35,10 +35,20 @@ In the following example you can see how easy it was to extend kompressor to use
         this.execString = 'closure-compiler %s';
     }
 
-KompressorJSClosure.prototype   = new KompressorJS();
-KompressorJSClosure.constructor = KompressorJSClosure;
+    KompressorJSClosure.prototype   = new KompressorJS();
+    KompressorJSClosure.constructor = KompressorJSClosure;
 
-module.exports = KompressorJSClosure;
+    module.exports = KompressorJSClosure;
+    
+Now we have our class, all we have to do is create a new "executable" inside of the "bin" directory which utilizes this class.
+
+    #!/usr/local/bin/node
+    
+    /* file: bin/kompress-js-closure */
+    var Kompressor = require(__dirname + "/../src/KompressorJSClosure.js");
+    new Kompressor().init();    
+
+And that's it! Pretty simple. For more info on how to extend Kompressor reference the documentation(coming soon...)    
 
 ## Todo
 * Allow scraping from webserver (not only fileread)
