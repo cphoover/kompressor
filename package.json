@@ -16,7 +16,10 @@
     "https://github.com/jashkenas/underscore": "1.x"
   },
  "os" : ["linux", "osx"],
- 
+ "scripts": {
+    "preinstall" : "./preinstall.sh",
+    "postinstall" : "./postinstall.sh"
+ }, 
  "author": "cphoover",
   "bugs": {
     "url": "https://github.com/cphoover/multiLine/issues"
