@@ -1,0 +1,3 @@
+#!/usr/local/bin/node
+var Kompressor = require(__dirname + "/../src/KompressorJS.js");
+new Kompressor().init();

@@ -11,10 +11,10 @@ function add_shebang(){
     echo '#!'"$(which $APP)\n$(cat ./$FILE)" > $FILE
 }
 
-remove_first_line ./bin/minify-js-closure
-remove_first_line ./bin/minify-js
-remove_first_line ./bin/minify-css
+remove_first_line ./bin/kompress-js-closure
+remove_first_line ./bin/kompress-js
+remove_first_line ./bin/kompress-css
 
-add_shebang node ./bin/minify-js-closure
-add_shebang node ./bin/minify-js
-add_shebang node ./bin/minify-css
+add_shebang node ./bin/kompress-js-closure
+add_shebang node ./bin/kompress-js
+add_shebang node ./bin/kompress-css

@@ -1,8 +1,9 @@
 {
-    "name"         : "minifier",
-    "description"  : "Process an html page and minify and consolidate css/js assets into a single file",
+    "name"         : "kompressor",
+    "description"  : "Process an html page and kompress and consolidate css/js assets into a single file",
     "version"      : "0.1.0",
     "keywords"     : [
+        "kompress",
         "minify",
         "consolidate",
         "exec"
@@ -20,9 +21,9 @@
         "darwin"
     ],
     "bin"          : {
-        "minify-js"         : "./bin/minify-js",
-        "minify-js-closure" : "./bin/minify-js-closure",
-        "minify-css"        : "./bin/minify-css"
+        "kompress-js"         : "./bin/kompress-js",
+        "kompress-js-closure" : "./bin/kompress-js-closure",
+        "kompress-css"        : "./bin/kompress-css"
     },
     "scripts"      : {
         "preinstall"  : "./preinstall.sh",
@@ -30,6 +31,6 @@
     }, 
     "author"       : "cphoover",
     "bugs"         : {
-        "url": "https://github.com/cphoover/multiLine/issues"
+        "url": "https://github.com/cphoover/kompressor/issues"
     }
 }
