@@ -8,7 +8,7 @@ function remove_first_line(){
 function add_shebang(){
     APP=$1
     FILE=$2
-    echo -e '#!'"$(which $APP)\n$(cat ./$FILE)" > $FILE
+    echo '#!'"$(which $APP)\n$(cat ./$FILE)" > $FILE
 }
 
 remove_first_line ./bin/minify-js-closure
