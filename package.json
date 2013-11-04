@@ -15,7 +15,7 @@
     "https://github.com/zaach/jsonlint": "1.x",
     "https://github.com/jashkenas/underscore": "1.x"
   },
- "os" : ["linux", "osx"],
+ "os" : ["linux", "darwin"],
  "scripts": {
     "preinstall" : "./preinstall.sh",
     "postinstall" : "./postinstall.sh"
