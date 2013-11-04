@@ -1,0 +1,16 @@
+{
+    "PROJECT_INDEX_FILE": "/Users/choover/kwall/kw-webservices/src/main/webapp/WEB-INF/views/index.jsp",
+    "WEBROOT_REPLACEMENTS": [
+        [
+            "/kwsvc",
+            "~/kwall/kw-webservices/src/main/webapp"
+        ],
+        [
+            "/sugar",
+            "~/kwall/sugar/src/main/webapp"
+        ]
+    ],
+    "OUTPUT": "/Users/choover/kwall/kw-webservices/src/main/webapp/main/kw.min.css",
+    "DRY_RUN": false,
+    "FAIL_EXTERNAL_URLS": true
+}
