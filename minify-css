@@ -1,5 +1,2 @@
-#!/usr/local/bin/node
-
 var Minifier = require(__dirname + "/src/MinifierCSS.js");
 new Minifier().init();
-
