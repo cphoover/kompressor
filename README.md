@@ -13,3 +13,7 @@
 
 ## Caveats
 if you are using imports in your css it will break the css minifier :grimacing:
+
+## Todo
+* Allow scraping from webserver (not only fileread)
+* Add support for SSL
