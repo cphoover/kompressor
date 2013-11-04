@@ -25,6 +25,7 @@ Also and this is an **IMPORTANT NOTE** css assets such as fonts and background i
 
 ## Extending Kompressor
 In the following example you can see how easy it was to extend kompressor to use google's closure compiler instead of our default js compiler uglify.js. It was as simple as changing the execString property to the executable string that compiles each file. %s being the file which is interpolated within the string.
+```js
 
     /* file: src/KompressorJSClosure.js */
     
@@ -40,13 +41,17 @@ In the following example you can see how easy it was to extend kompressor to use
 
     module.exports = KompressorJSClosure;
     
+```
+
 Now we have our class, all we have to do is create a new "executable" inside of the "bin" directory which utilizes this class.
 
+```js
     #!/usr/local/bin/node
     
     /* file: bin/kompress-js-closure */
     var Kompressor = require(__dirname + "/../src/KompressorJSClosure.js");
     new Kompressor().init();    
+```    
 
 And that's it! Pretty simple. For more info on how to extend Kompressor reference the documentation(coming soon...)    
 
