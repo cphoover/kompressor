@@ -41,7 +41,7 @@ MinifierBase.prototype.init = function(){
         this.program = require('commander');
 
         this.program
-            .version('0.0.1')
+            .version('0.1.0')
             .option('-i, --PROJECT-INDEX-FILE [file]'              , 'Specifies the html file to process')
             .option('-r, --WEBROOT-REPLACEMENTS [patterns]'        , 'Set replacements for path [kwsvc|/home/choover/kwsvc,sugar|home/choover/sugar]' , function(){ return self.multiList.apply(self, arguments ); })
             .option('-v, --EXCLUDED-PATTERNS [patterns]'           , 'Specifies files to skip based on matching regex patterns', function(){ return self.list.apply(self, arguments); })
