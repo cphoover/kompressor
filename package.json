@@ -1,27 +1,35 @@
 {
-  "name": "minifier",
-  "description": "Process an html page and minify and consolidate css/js assets into a single file",
-  "version": "0.1.0",
-  "keywords": [
-    "minify",
-    "consolidate",
-    "exec"
-  ],
-  "dependencies": {
-    "colors"   : ">=0.6.2 <1.00",
-    "commander": "2.x",
-    "jsdom"       : ">=0.8.6 <1.00",
-    "q"           : ">=0.9.7 <1.00",
-    "jsonlint"    : "1.x",
-    "underscore"  : "1.x"
-  },
- "os" : ["linux", "darwin"],
- "scripts": {
-    "preinstall" : "./preinstall.sh",
-    "postinstall" : "./postinstall.sh"
- }, 
- "author": "cphoover",
-  "bugs": {
-    "url": "https://github.com/cphoover/multiLine/issues"
-  }
+    "name"         : "minifier",
+    "description"  : "Process an html page and minify and consolidate css/js assets into a single file",
+    "version"      : "0.1.0",
+    "keywords"     : [
+        "minify",
+        "consolidate",
+        "exec"
+    ],
+    "dependencies" : {
+        "colors"      : ">=0.6.2 <1.00",
+        "commander"   : "2.x",
+        "jsdom"       : ">=0.8.6 <1.00",
+        "q"           : ">=0.9.7 <1.00",
+        "jsonlint"    : "1.x",
+        "underscore"  : "1.x"
+    },
+    "os"           : [
+        "linux",
+        "darwin"
+    ],
+    "bin"          : {
+        "minify-js"         : "./bin/minify-js",
+        "minify-js-closure" : "./bin/minify-js-closure",
+        "minify-css"        : "./bin/minify-css"
+    },
+    "scripts"      : {
+        "preinstall"  : "./preinstall.sh",
+        "postinstall" : "./postinstall.sh"
+    }, 
+    "author"       : "cphoover",
+    "bugs"         : {
+        "url": "https://github.com/cphoover/multiLine/issues"
+    }
 }

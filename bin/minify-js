@@ -1,0 +1,2 @@
+var Minifier = require(__dirname + "/src/MinifierJS.js");
+new Minifier().init();
