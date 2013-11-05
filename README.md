@@ -11,8 +11,8 @@ with npm:
 
 or with github:
 
-     git clone https://github.com/cphoover/minifier.git
      ./preinstall.sh
+     git clone https://github.com/cphoover/minifier.git
      ./postinstall.sh
      
 ## Options
