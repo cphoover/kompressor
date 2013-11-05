@@ -24,6 +24,8 @@ function KompressorBase(){
     this.options.DRY_RUN                     = false;
     this.options.DISABLE_LOGGING             = false;
     this.options.FAIL_EXTERNAL_URLS          = true;
+    this.options.CERT                        = null;
+    this.options.KEY                         = null;
     this.options.CONFIG                      = null;
     this.assetType                           = null;
     this.assetSrcAttribute                   = null;
@@ -49,6 +51,8 @@ KompressorBase.prototype.init = function(){
             .option('-l, --DISABLE-LOGGING'                        , 'Turn off logging, show only process output')
             .option('-o, --OUTPUT [file]'                          , 'Specifies output file location')
             .option('-w, --FAIL-EXTERNAL-URLS'                     , 'Returns an error if external URLS are present')
+            .option('-c, --CERT'                                   , 'Use the specified client certificate file when getting a file with HTTPS')
+            .option('-k, --KEY'                                    , 'Private key file name. Allows you to provide your private key in this separate file.')
             .option('-x, --CONFIG [file]'                          , 'Run with specified config file')
             .parse(process.argv);
 
@@ -59,15 +63,18 @@ KompressorBase.prototype.init = function(){
         this.options.DRY_RUN                     = this.program.DRYRUN                    || this.options.DRY_RUN                     ;
         this.options.DISABLE_LOGGING             = this.program.DISABLELOGGING            || this.options.DISABLE_LOGGING             ;
         this.options.FAIL_EXTERNAL_URLS          = this.program.FAILLEXTERNALURLS         || this.options.FAIL_EXTERNAL_URLS          ;
+        this.options.CERT                        = this.program.CERT                      || this.options.CERT                        ;
+        this.options.KEY                         = this.program.KEY                       || this.options.KEY                         ;
         this.options.CONFIG                      = this.program.CONFIG                    || this.options.CONFIG                      ;
 
 
         if(this.options.DISABLE_LOGGING) Logger.off = true;
 
-        self.setupConfig().
-        then ( function ( ){ return self.checkConfig.apply ( self, arguments); }).
-        then ( function ( ){ return self.process.apply     ( self, arguments); }).
-        done ( function ( ){ Logger.log ( 'done'.green);                       });
+        self.preKompress().
+        then ( function ( ){ return self.kompress.apply     ( self, arguments); }).
+        then ( function ( ){ return self.postKompress.apply ( self, arguments); }).
+        done ( function ( ){ console.log("done!".green); }                       );
+
     } catch(_e){
         _e.message = "An error occurred:\n\n" + _e.message;
         this.exitWithError(_e);
@@ -177,6 +184,23 @@ KompressorBase.prototype.setupWriteStream = function(){
     }
 };
 
+KompressorBase.prototype.preKompress = function(){ 
+
+    var future = Q.defer();
+    //read index file
+    var self = this;
+
+    self.setupConfig()
+    .then( function( ){ return self.checkConfig.apply      (self, arguments);  })
+    .then( function( ){ return self.readIndexFile.apply    (self, arguments);  })
+    .then( function( ){ return self.setupDom.apply         ( self, arguments); })
+    .then( function( ){ return self.scrapeAssets.apply     ( self, arguments); })
+    .then( function( ){ return self.setupWriteStream.apply ( self, arguments); })
+    .done( function( ){ future.resolve(); });
+    
+    return future.promise;
+};
+
 KompressorBase.prototype.kompress = function(_file, _future){
     try{
         var self = this;
@@ -230,21 +254,12 @@ KompressorBase.prototype.kompress = function(_file, _future){
 };
 
 
-KompressorBase.prototype.process = function(){ 
-
+KompressorBase.prototype.postKompress = function(){
     var future = Q.defer();
-    //read index file
-    var self = this;
-
-    self.readIndexFile()
-    .then( function( ){ return self.setupDom.apply         ( self, arguments); })
-    .then( function( ){ return self.scrapeAssets.apply     ( self, arguments); })
-    .then( function( ){ return self.setupWriteStream.apply ( self, arguments); })
-    .then( function( ){ return self.kompress.apply           ( self, arguments); })
-    .done( function( ){ future.resolve(); });
-    
+    future.resolve();
     return future.promise;
 };
+
 
 KompressorBase.prototype.checkConfig = function(){
     
