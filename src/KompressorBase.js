@@ -167,6 +167,8 @@ KompressorBase.prototype.setupWriteStream = function(){
             this.fileWriteStream.once('open', function(){
                 future.resolve();
             });
+        } else{
+            future.resolve();
         }
         return future.promise;
     } catch(_e){
@@ -197,7 +199,6 @@ KompressorBase.prototype.kompress = function(_file, _future){
             var replacementPattern = new RegExp(self.options.WEBROOT_REPLACEMENTS[i][0]); 
             assetFile = assetFile.replace(replacementPattern, self.options.WEBROOT_REPLACEMENTS[i][1]);
         }
-    
         Logger.log(("Starting to process file: " + assetFile).green);
 
         //execute the execString interpolating the filename 
@@ -212,7 +213,7 @@ KompressorBase.prototype.kompress = function(_file, _future){
             if(self.fileWriteStream && !self.options.DRY_RUN) self.fileWriteStream.write(_stdout);
             
             //write the output to stdout stream
-            process.stdout.write(_stdout);  
+            process.stdout.write(_stdout + (!self.options.DISABLE_LOGGING ? "\n\n" : ""));  
 
             //recurse with next index of array
             self.kompress((_file + 1), _future);
@@ -256,7 +257,7 @@ KompressorBase.prototype.checkConfig = function(){
         process.exit(1);
     }    
 
-    if(!this.options.OUTPUT){
+    if(!this.options.DRY_RUN && !this.options.OUTPUT){
         this.exitWithHelp('Please specify an output file.');
         process.exit(1);
     }
