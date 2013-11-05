@@ -3,6 +3,18 @@
 ## What it is?
 Kompressor is a command line utility for compressing and concatenating static JS & CSS. Kompressor uses JSDOM to scrape a specified index page scripts and stylesheets. It then uses a specified program to minify (kompress) each file and pipe the output into a specified output file.  By default kompressor uses Yahoo's yuicompressor for css minification, and uglifyjs for javascript minification. Extending kompressor to use another program is super simple, and simply requires extending one of the Kompressor classes and changing the exec string ([see below](#extending-kompressor)).
 
+## Installation
+
+with npm:
+
+    npm install kompressor
+
+or with github:
+
+     git clone https://github.com/cphoover/minifier.git
+     ./preinstall.sh
+     ./postinstall.sh
+     
 ## Options
 
     -h, --help                             output usage information
