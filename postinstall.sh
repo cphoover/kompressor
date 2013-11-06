@@ -18,3 +18,7 @@ remove_first_line ./bin/kompress-css
 add_shebang node ./bin/kompress-js-closure
 add_shebang node ./bin/kompress-js
 add_shebang node ./bin/kompress-css
+
+chmod 0770 ./bin/kompress-js-closure
+chmod 0770 ./bin/kompress-js
+chmod 0770 ./bin/kompress-css
