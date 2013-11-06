@@ -31,9 +31,8 @@ or with github:
     -x, --CONFIG [file]                    Run with specified config file
 
 ## Caveats
-Right now Kompressor only works by reading the specified index file from the filesystem. This works well for applications with a static JS frontend that communicates with an API service, it does not work as well with dynamically created pages.  There are plans in the immediate future to change this, and add support for http/https scraping of the index file.
 
-if you are using imports in your css it will break the css minifier :grimacing:
+If you are using imports in your css it will break the css minifier :grimacing:
 
 Also and this is an **IMPORTANT NOTE** css assets such as fonts and background images must be absolute to the webroot and not relative to the stylesheet, otherwise minification will break your links.
 
@@ -70,6 +69,5 @@ Now we have our class, all we have to do is create a new "executable" inside of 
 And that's it! Pretty simple. For more info on how to extend Kompressor reference the documentation(coming soon...)    
 
 ## Todo
-* Allow scraping from webserver (not only fileread)
-* Add support for SSL
 * Add tests
+* Add Usage examples
