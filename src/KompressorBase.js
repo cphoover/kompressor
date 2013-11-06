@@ -51,8 +51,8 @@ KompressorBase.prototype.init = function(){
             .option('-l, --DISABLE-LOGGING'                        , 'Turn off logging, show only process output')
             .option('-o, --OUTPUT [file]'                          , 'Specifies output file location')
             .option('-w, --FAIL-EXTERNAL-URLS'                     , 'Returns an error if external URLS are present')
-            .option('-c, --CERT'                                   , 'Use the specified client certificate file when getting a file with HTTPS')
-            .option('-k, --KEY'                                    , 'Private key file name. Allows you to provide your private key in this separate file.')
+            .option('-c, --CERT [file]'                            , 'Use the specified client certificate file when getting a file with HTTPS')
+            .option('-k, --KEY [file]'                             , 'Private key file name. Allows you to provide your private key in this separate file.')
             .option('-x, --CONFIG [file]'                          , 'Run with specified config file')
             .parse(process.argv);
 
@@ -107,16 +107,52 @@ KompressorBase.prototype.multiList = function(_list){
     });
 };
 
-KompressorBase.prototype.readIndexFile = function(){
-    try{ 
+KompressorBase.prototype.readFromCurl = function(_future){
+    try{
+
+        var self = this;
+
+        var execString = "curl -L -k " +
+        ( this.options.CERT ? " --CERT " + this.options.CERT : "" ) +
+        ( this.options.KEY  ? " --KEY " + this.options.KEY : "" )   +
+        " " + this.options.PROJECT_INDEX_FILE;
+
+        Logger.log('execString', execString);
+
+        exec(execString, {"encoding" : 'utf8', "maxBuffer" : 5000*1024 }, function(_err, _stdout, _stderr){
+            if(_err) self.exitWithError(_err);
+            if(_stderr) process.stderr.write(_stderr);
+            self.html = _stdout;
+            _future.resolve();
+        });
+
+    } catch(_e) {
+        _e.message = "An error occured while reading index file from disk\n\n" + _e.message;
+    }
+};
+
+KompressorBase.prototype.readFromDisk = function(_future){
+    try{
         Logger.log("Starting to read index file".green);
         var self = this;
-        var future = Q.defer();
         fs.readFile(this.options.PROJECT_INDEX_FILE, { "encoding": 'utf8' }, function(_err, _data){
             if(_err) throw _err;
             self.html = _data;
-            future.resolve();
+            _future.resolve();
         });  
+    } catch(_e) {
+        _e.message = "An error occured while reading index file from disk\n\n" + _e.message;
+    }
+};
+
+KompressorBase.prototype.readIndexFile = function(){
+    try{ 
+        var future = Q.defer();
+        var linkRegex =  /^(?:ftp|http|https):\/\/(?:[\w\.\-\+]+:{0,1}[\w\.\-\+]*@)?(?:[a-z0-9\-\.]+)(?::[0-9]+)?(?:\/|\/(?:[\w#!:\.\?\+=&%@!\-\/\(\)]+)|\?(?:[\w#!:\.\?\+=&%@!\-\/\(\)]+))?$/
+        console.log('regex test', linkRegex.test(this.options.PROJECT_INDEX_FILE));
+        if(linkRegex.test(this.options.PROJECT_INDEX_FILE)) this.readFromCurl(future);
+        else this.readFromDisk(future);
+
         return future.promise;
     } catch(_e) {
         _e.message = "An error occurred while reading the index file \n\n" + _e.message;
@@ -191,8 +227,8 @@ KompressorBase.prototype.preKompress = function(){
     var self = this;
 
     self.setupConfig()
-    .then( function( ){ return self.checkConfig.apply      (self, arguments);  })
-    .then( function( ){ return self.readIndexFile.apply    (self, arguments);  })
+    .then( function( ){ return self.checkConfig.apply      ( self, arguments);  })
+    .then( function( ){ return self.readIndexFile.apply    ( self, arguments);  })
     .then( function( ){ return self.setupDom.apply         ( self, arguments); })
     .then( function( ){ return self.scrapeAssets.apply     ( self, arguments); })
     .then( function( ){ return self.setupWriteStream.apply ( self, arguments); })
@@ -287,6 +323,8 @@ KompressorBase.prototype.checkConfig = function(){
     Logger.log(('DRY_RUN: '                     + this.options.DRY_RUN                     ) .yellow ) ;
     Logger.log(('FAIL_EXTERNAL_URLS: '          + this.options.FAIL_EXTERNAL_URLS          ) .yellow ) ;
     Logger.log(('CONFIG: '                      + this.options.CONFIG                      ) .yellow ) ;
+    Logger.log(('CERT: '                        + this.options.CERT                        ) .yellow ) ;
+    Logger.log(('KEY: '                         + this.options.KEY                         ) .yellow ) ;
        
     future.resolve();
 

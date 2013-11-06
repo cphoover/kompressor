@@ -26,6 +26,8 @@ or with github:
     -l, --DISABLE-LOGGING                  Turn off logging, show only process output
     -o, --OUTPUT [file]                    Specifies output file location
     -w, --FAIL-EXTERNAL-URLS               Returns an error if external URLS are present
+    -c, --CERT [file]                      Use the specified client certificate file when getting a file with HTTPS
+    -k, --KEY [file]                       Private key file name. Allows you to provide your private key in this separate file.
     -x, --CONFIG [file]                    Run with specified config file
 
 ## Caveats
